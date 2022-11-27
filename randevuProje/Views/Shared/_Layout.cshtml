@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="robots" content="Index,follow" />
+    <meta name="abstract" content="@Proje.Aktif.SiteAyar._abstract" />
+    <meta name="keywords" content="@Proje.Aktif.SiteAyar.keywords" />
+    <meta name="description" content="@Proje.Aktif.SiteAyar.description" />
+    <meta name="copyright" content="@Proje.Aktif.SiteAyar.tesisadi Tüm Hakları Saklıdır. @DateTime.Now.Year" />
+    <meta name="author" content="info@ceoweb.net" />
+    <title>@Proje.Aktif.SiteAyar.tesisadi</title>
+    <script id="www-widgetapi-script" src="https://s.ytimg.com/yts/jsbin/www-widgetapi-vflS50iB-/www-widgetapi.js" async=""></script>
+    <link rel="stylesheet preload" as="style" href="~/Content/css/preload.min.css">
+    <link rel="stylesheet preload" as="style" href="~/Content/css/icomoon.css">
+    <link rel="stylesheet preload" as="style" href="~/Content/css/libs.min.css">
+    <link rel="stylesheet" href="~/Content/css/index.min.css">
+    <link rel="stylesheet" href="~/Content/css/about.min.css">
+    <link rel="stylesheet" href="~/Content/css/gallery.min.css">
+    <link rel="stylesheet" href="~/Content/css/room.min.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.2/css/all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="~/Content/images/favicon.ico">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.38.0/js/tempusdominus-bootstrap-4.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.38.0/css/tempusdominus-bootstrap-4.min.css" crossorigin="anonymous" />
+
+    <link href="~/Content/admin/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" rel="stylesheet" />
+    <script src="~/Content/admin/sweetalert2/sweetalert2.min.js"></script>
+
+</head>
+
+<style>
+    .map-container {
+        overflow: hidden;
+        position: relative;
+        height: 0;
+    }
+
+        .map-container iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+
+    .float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 40px;
+        left: 11px;
+        background-color: #38d85d;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        font-size: 30px;
+        box-shadow: 5px 5px 5px #999;
+        z-index: 100;
+    }
+
+    .my-float {
+        margin-top: 16px;
+    }
+</style>
+
+<body>
+    <a href="https://api.whatsapp.com/send?phone=@Proje.Aktif.SiteAyar.numara2&text=Merhaba%21%20Bilgi%20almak%20istiyorum." class="float" target="_blank">
+        <i class="fa fa-whatsapp my-float"></i>
+    </a>
+    <header class="header d-flex align-items-center" data-page="home">
+        <div class="container position-relative justify-content-between align-items-center">
+            <a class="brand_name" href="/Home/Index">@Proje.Aktif.SiteAyar.tesisadi</a>
+            <div class="header_offcanvas offcanvas offcanvas-end" id=menuOffcanvas>
+            </div><button class="header_trigger d-lg-none" type="button" data-bs-toggle="offcanvas"
+                          data-bs-target="#menuOffcanvas"></button>
+        </div>
+    </header>
+    @RenderBody()
+    <br><br><br>
+    <footer class="footer accent">
+        <div class="footer_copyright">
+            <a class="link" href="@Proje.Aktif.SiteAyar.instagram"><i class="fa-brands fa-instagram fa-3x"></i></a>
+            <br />
+            <br />
+            <br />
+            <div class="container">
+                <p class="footer_copyright-text">
+                    <span class="linebreak"> @Proje.Aktif.SiteAyar.tesisadi </span> <span class="linebreak">All rights reserved Copyrights @DateTime.Now.Year </span>
+                </p>
+                <p class="footer_copyright-text">
+                    <a href="https://www.bungalovcum.com/" target="_blank" rel="noopener noreferrer" >Bungalovcum.com &copy;</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="~/Content/js/common.min.js"></script>
+    <script src="~/Content/js/index.min.js"></script>
+    <script src="~/Content/js/gallery.min.js"></script>
+    <script src="~/Content/js/room.min.js"></script>
+</body>
+
+</html>

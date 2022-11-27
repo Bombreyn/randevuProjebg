@@ -1,0 +1,177 @@
+﻿@using randevuProje.Models
+@model SiteAyarViewModel
+@{
+    ViewBag.Title = "Site Ayar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (TempData["Kaydedildi"] != null)
+{
+
+    <script>
+        Swal.fire("Değişiklikler", "Kaydedildi", "success")
+    </script>
+}
+
+@using (Html.BeginForm("SiteAyarları", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="card">
+        <div class="card-body">
+            <div class="p-4 border rounded">
+                <input type="hidden" class="form-control" name="siteayarID" required="" autocomplete="off" value="@Model.siteAyar.siteayarID">
+                <div class="row g-3 needs-validation" novalidate="">
+                    <div class="col-md-3">
+                        <label for="validationCustom01" class="form-label">Başlık</label>
+                        <input type="text" class="form-control" id="validationCustom01" value="@Model.siteAyar.baslik" name="baslik" required="">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom01" class="form-label">Tesis Adı</label>
+                        <input type="text" class="form-control" id="validationCustom01" value="@Model.siteAyar.tesisadi" name="tesisadi" required="">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom01" class="form-label">Seçenek</label>
+                        <input type="text" class="form-control" id="validationCustom01" value="@Model.siteAyar.secenek" name="secenek" required="">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom01" class="form-label">İnstagram</label>
+                        <input type="text" class="form-control" id="validationCustom01" value="@Model.siteAyar.instagram" name="instagram" required="">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="validationCustom01" class="form-label">Telefon No</label>
+                        <input type="tel" class="form-control" id="validationCustom01" value="@Model.siteAyar.numara1" name="numara1" required="">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="validationCustom01" class="form-label">Whatsapp No</label>
+                        <input type="text" class="form-control" id="validationCustom01" value="@Model.siteAyar.numara2" name="numara2" required="">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom01" class="form-label">Mail-1-</label>
+                        <input type="text" class="form-control" id="validationCustom01" value="@Model.siteAyar.mail1" name="mail1" required="">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationCustom01" class="form-label">Mail-2-</label>
+                        <input type="text" class="form-control" id="validationCustom01" value="@Model.siteAyar.mail2" name="mail2" required="">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="validationCustom01" class="form-label">Harita Kodu</label>
+                        <input type="text" class="form-control" id="validationCustom01" value="@Model.siteAyar.harita" name="harita" required="">
+                    </div>
+                    <div class="col-md-4">
+                        <a href="@Model.siteAyar.slider_resim" target="_blank"><img src="@Model.siteAyar.slider_resim" name="slider_resim" alt="image" width="300" height="211"></a>
+                        <label for="validationDefault01" class="form-label">Kapak Resim (1359x825)</label>
+                        <input type="file" class="form-control" name="slider_resim" aria-label="file example" />
+                    </div>
+                    <div class="col-md-4">
+                        <textarea class="form-control is-invalid" id="summernote1" name="slider_aciklama">@Model.siteAyar.slider_aciklama</textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <textarea class="form-control is-invalid" id="summernote2" name="konum">@Model.siteAyar.konum</textarea>
+                    </div>
+                    <br />
+                    <h1 align="center">SEO Ayarları</h1><br /><br /><br /><br /><br />
+                    <div class="col-md-4">
+                        <h3 align="center">Abstract</h3>
+                        <p><h5 align="center">(Site Hizmeti)</h5></p>
+                        <textarea class="form-control is-invalid" id="summernote3" name="_abstract">@Model.siteAyar._abstract</textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <h3 align="center">Description</h3>
+                        <p><h5 align="center">(Site İçerik ve Hizmet Açıklama)</h5></p>
+                        <textarea class="form-control is-invalid" id="summernote4" name="description">@Model.siteAyar.description</textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <h3 align="center">Keywords</h3>
+                        <p><h5 align="center">(Anahtar Kelimeler)</h5></p>
+                        <textarea class="form-control is-invalid" id="summernote5" name="keywords">@Model.siteAyar.keywords</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mx-auto text-center col-sm-2">Güncelle</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<script>
+    $('#summernote1').summernote({
+        placeholder: 'Açıklama',
+        tabsize: 2,
+        height: 158,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+<script>
+    $('#summernote2').summernote({
+        placeholder: 'Adres',
+        tabsize: 2,
+        height: 158,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+<script>
+    $('#summernote3').summernote({
+        placeholder: 'Abstract',
+        tabsize: 2,
+        height: 158,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+<script>
+    $('#summernote4').summernote({
+        placeholder: 'Description',
+        tabsize: 2,
+        height: 158,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+<script>
+    $('#summernote5').summernote({
+        placeholder: 'Keywords',
+        tabsize: 2,
+        height: 158,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>

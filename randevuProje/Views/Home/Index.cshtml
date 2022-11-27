@@ -1,0 +1,213 @@
+﻿
+@{
+    ViewBag.Title = "Anasayfa";
+}
+
+@using randevuProje.App_Start
+@using randevuProje.Models
+@model ViewModel
+
+
+<main>
+    <section class="hero section">
+        <div class="container container--hero d-lg-flex align-items-center justify-content-between">
+            <div class=hero_main>
+                <h1 class=hero_main-title data-aos=fade-up>
+                    @Proje.Aktif.SiteAyar.baslik
+                </h1>
+                <div class="hero_main-content d-flex">
+                    <span class=line data-aos=fade-up data-aos-delay=50></span>
+                    <p class=text data-aos=fade-up data-aos-delay=100>
+                        @Proje.Aktif.SiteAyar.slider_aciklama
+                    </p>
+                </div>
+                <a href="#@Proje.Aktif.SiteAyar.secenek"><button class="booking_btn btn theme-element theme-element--accent">Randevu Al</button></a>
+                <a href="#galeri"><button class="booking_btn btn theme-element theme-element--accent">Galeri</button></a>
+                <a href="#iletisim"><button class="booking_btn btn theme-element theme-element--accent">İletişim</button></a>
+
+            </div>
+            <div class=hero_media data-aos=zoom-in>
+                <picture>
+                    <img class="lazy" src="@Proje.Aktif.SiteAyar.slider_resim" alt=media>
+                </picture>
+            </div>
+        </div>
+    </section>
+    <br /><br /><br /><br />
+
+    <section class="rooms section--blockbg section--nopb" id="@Proje.Aktif.SiteAyar.secenek">
+        <div class=block></div>
+        <div class=container>
+            <div class="rooms_header d-sm-flex justify-content-between align-items-center">
+                <h2 class=rooms_header-title data-aos=fade-right>@Proje.Aktif.SiteAyar.secenek</h2>
+            </div>
+            <ul class="rooms_list d-md-flex flex-wrap">
+                @foreach (var item in Model.odalars)
+                {
+                    if (item.aktif != null && item.aktif != false)
+                    {
+
+                        <li class="rooms_list-item col-md-6 col-xl-4" data-order=1 data-aos=fade-up>
+                            <div class="item-wrapper d-md-flex flex-column">
+                                <div class=media>
+                                    <picture>
+                                        <a href="/Odalar/@seo.Seo.AdresDuzenle(item.adi)-@item.odaID"><img class=lazy src="@item.kapakresim" alt=media></a>
+                                    </picture><span class="media_label media_label--pricing">
+                                        <span class="price h4">₺ @String.Format("{0:0}", item.fiyat)</span> / gecelik
+                                    </span>
+                                </div>
+                                <div class="main d-md-flex flex-column justify-content-between flex-grow-1">
+                                    <a class="main_title h4" href="/Odalar/@seo.Seo.AdresDuzenle(item.adi)-@item.odaID" data-shave=true>
+                                        @item.adi
+                                    </a>
+                                    <div class=main_amenities>
+                                        <span class="main_amenities-item d-inline-flex align-items-center">
+                                            <i class="fa-solid fa-user"></i>&nbsp; @item.kişi
+                                        </span><span class="main_amenities-item d-inline-flex align-items-center">
+                                            <i class="fa-solid fa-bed-front"></i>&nbsp; @item.yatak
+                                        </span>
+                                    </div><a class="link link--arrow d-inline-flex align-items-center" href="/Odalar/@seo.Seo.AdresDuzenle(item.adi)-@item.odaID">
+                                        Randevu Al <i class="icon-arrow_right icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        Href("Index", "Home");
+                    }
+
+
+                }
+
+
+            </ul>
+        </div>
+    </section>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="gallery section--blockbg section" id="galeri">
+        <div class="block"></div>
+
+        <div class=container>
+            <div class="rooms_header d-sm-flex justify-content-between align-items-center">
+                <h2 class="rooms_header-title aos-init aos-animate" data-aos="fade-right">Galeri</h2>
+            </div>
+            <div class="gallery_masonry row g-0">
+                @foreach (var item in Model.resims)
+                {
+                    <figure class="gallery_masonry-item col-sm-6 col-lg-4">
+                        <a class="aspect aspect--sm" href="@item.resim1"
+                           data-role=gallery-link>
+                            <div class=aspect__inner>
+                                <picture>
+                                    <img class="gallery_masonry-item_img lazy" src="@item.resim1" alt=media>
+                                </picture>
+                            </div>
+                            <div class="overlay d-flex align-items-center justify-content-center">
+                                <div class=overlay_focus>
+                                    <svg width=105 height=106 viewBox="0 0 105 106" fill=none
+                                         xmlns=http://www.w3.org/2000/svg>
+                                        <path d="M103.514 28.944C102.693 28.944 102.028 28.2795 102.028 27.4598V3.712H78.2507C77.43 3.712 76.7646 3.04749 76.7646 2.22777C76.7646 1.40805 77.43 0.74353 78.2507 0.74353H103.514C104.335 0.74353 105 1.40805 105 2.22777V27.4598C105 28.2795 104.335 28.944 103.514 28.944Z"
+                                              fill=currentColor />
+                                        <path d="M26.7492 105.614H1.48607C0.665335 105.614 0 104.95 0 104.13V78.8978C0 78.0781 0.665335 77.4136 1.48607 77.4136C2.3068 77.4136 2.97214 78.0781 2.97214 78.8978V102.646H26.7492C27.57 102.646 28.2353 103.31 28.2353 104.13C28.2353 104.95 27.57 105.614 26.7492 105.614Z"
+                                              fill=currentColor />
+                                        <path d="M1.48607 28.944C0.665335 28.944 0 28.2795 0 27.4598V2.22777C0 1.40805 0.665335 0.74353 1.48607 0.74353H26.7492C27.57 0.74353 28.2353 1.40805 28.2353 2.22777C28.2353 3.04749 27.57 3.712 26.7492 3.712H2.97214V27.4598C2.97214 28.2795 2.3068 28.944 1.48607 28.944Z"
+                                              fill=currentColor />
+                                        <path d="M103.514 105.614H78.2507C77.43 105.614 76.7646 104.95 76.7646 104.13C76.7646 103.31 77.43 102.646 78.2507 102.646H102.028V78.8978C102.028 78.0781 102.693 77.4136 103.514 77.4136C104.335 77.4136 105 78.0781 105 78.8978V104.13C105 104.95 104.335 105.614 103.514 105.614Z"
+                                              fill=currentColor />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                    </figure>
+                }
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <section class="contacts section" id="iletisim">
+
+        <div class="container container--contacts d-xl-flex align-items-center">
+            <div class=contacts_info>
+                <div class=contacts_info-header>
+                    <h2 class=contacts_info-header_title data-aos=fade-down>İletişim</h2>
+                    <p class=contacts_info-header_text data-aos=fade-up> Bilgi, Randevu ve Görüşleriniz için iletişime geçebilirsiniz </p>
+                </div>
+                <ul class="contacts_info-list col-xl-9 d-md-flex flex-wrap">
+                    <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order=1
+                        data-aos=fade-up>
+                        <span class="theme-element theme-element--light media">
+                            <span class="icon-call icon">
+                                <svg width=28 height=29 viewBox="0 0 28 29" fill=none
+                                     xmlns=http://www.w3.org/2000/svg>
+                                    <path d="M26.9609 19.75L21 17.1797C20.7812 17.125 20.5625 17.0703 20.3438 17.0703C19.7969 17.0703 19.3047 17.2891 19.0312 17.6719L16.625 20.625C12.7969 18.7656 9.73438 15.7031 7.875 11.875L10.8281 9.46875C11.2109 9.19531 11.4297 8.70312 11.4297 8.15625C11.4297 7.9375 11.375 7.71875 11.3203 7.5L8.75 1.53906C8.47656 0.9375 7.875 0.5 7.21875 0.5C7.05469 0.5 6.94531 0.554688 6.83594 0.554688L1.3125 1.86719C0.546875 2.03125 0 2.6875 0 3.50781C0 17.3438 11.2109 28.5 24.9922 28.5C25.8125 28.5 26.4688 27.9531 26.6875 27.1875L27.9453 21.6641C27.9453 21.5547 27.9453 21.4453 27.9453 21.2812C27.9453 20.625 27.5625 20.0234 26.9609 19.75ZM24.9375 26.75C12.1406 26.75 1.75 16.3594 1.75 3.5625L7.16406 2.30469L9.67969 8.15625L5.6875 11.4375C8.36719 17.0703 11.4297 20.1328 17.1172 22.8125L20.3438 18.8203L26.1953 21.3359L24.9375 26.75Z"
+                                          fill=currentColor />
+                                </svg>
+                            </span>
+                        </span>
+                        <div class="main d-flex flex-column">
+                            <h4 class=main_title>Telefon</h4><a class=link href="tel:@Proje.Aktif.SiteAyar.numara1">@Proje.Aktif.SiteAyar.numara1</a>
+                        </div>
+                    </li>
+                    <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order=2
+                        data-aos=fade-up>
+                        <span class="theme-element theme-element--light media">
+                            <i class="icon-email icon"></i>
+                        </span>
+                        <div class="main d-flex flex-column">
+                            <h4 class=main_title>Email</h4>
+                            <a class=link href="mailto:@Proje.Aktif.SiteAyar.mail1">
+                                <span class="__cf_email__">@Proje.Aktif.SiteAyar.mail1</span>
+                            </a>
+                            <a class=link href="mailto:@Proje.Aktif.SiteAyar.mail2">
+                                <span class="__cf_email__">@Proje.Aktif.SiteAyar.mail2</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order=3
+                        data-aos=fade-up>
+                        <span class="theme-element theme-element--light media">
+                            <i class="icon-location icon"></i>
+                        </span>
+                        <div class="main d-flex flex-column">
+                            <h4 class=main_title>Konum</h4><span>@Proje.Aktif.SiteAyar.konum</span>
+                        </div>
+                    </li>
+                    <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order=4
+                        data-aos=fade-up>
+                        <span class="theme-element theme-element--light media">
+                            <i class="icon-clock icon"></i>
+                        </span>
+                        <div class="main d-flex flex-column">
+                            <h4 class=main_title>Çalışma Saatleri</h4><span>Hergün</span> <span>09:00 — 23:00</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class=contacts_map>
+                <div id="map-container" class="z-depth-1-half map-container" style="height: 298px">
+                    <iframe src="@Proje.Aktif.SiteAyar.harita"
+                            frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<br />
+<br />

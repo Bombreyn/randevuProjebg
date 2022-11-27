@@ -1,0 +1,199 @@
+﻿@model randevuProje.Models.ViewModel
+
+@{
+    ViewBag.Title = "Ozellik";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (TempData["IconEklendi"] != null)
+{
+    <script>
+        Swal.fire("Icon", "Eklendi", "success")
+    </script>
+}
+@if (TempData["IconSilindi"] != null)
+{
+    <script>
+        Swal.fire("Icon", "Silindi", "success")
+    </script>
+}
+
+<h6 class="mb-0 text-uppercase">@Model.Odalars.adi</h6>
+<hr />
+<div class="row">
+    <div class="card col-md-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ozellikekle1_@Model.Odalars.odaID">Özellik Ekle</button>
+        <!-- Modal -->
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Icon</th>
+                            <th>Kod</th>
+                            <th>Aktif</th>
+                            <th>Düzenle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.ozellik1)
+                        {
+                            <tr>
+                                <td align="center"><br />@Html.Raw(item.icon)</td>
+                                <td>@item.ozellik</td>
+                                <td>
+                                    @if (item.aktif == true)
+                                    {
+                                        <i class="lni lni-checkmark"></i>
+                                    }
+                                    else if (item.aktif == false)
+                                    {
+                                        <i class="lni lni-close"></i>
+                                    }
+                                </td>
+                                <td>
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#silozellik_@item.ozellik1ID">Sil</button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#duzenleozellik_@item.ozellik1ID">Düzenle</button>
+                                    <!-- Modal -->
+
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Icon</th>
+                            <th>Kod</th>
+                            <th>Aktif</th>
+                            <th>Düzenle</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-md-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ozellikekle2_@Model.Odalars.odaID">Özellik Ekle</button>
+        <!-- Modal -->
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Icon</th>
+                            <th>Kod</th>
+                            <th>Aktif</th>
+                            <th>Düzenle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.ozellik2)
+                        {
+                            <tr>
+                                <td align="center"><br />@Html.Raw(item.icon)</td>
+                                <td>@item.ozellik</td>
+                                <td>
+                                    @if (item.aktif == true)
+                                    {
+                                        <i class="lni lni-checkmark"></i>
+                                    }
+                                    else if (item.aktif == false)
+                                    {
+                                        <i class="lni lni-close"></i>
+                                    }
+                                </td>
+                                <td>
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#silozellik_@item.ozellik2ID">Sil</button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#duzenleozellik_@item.ozellik2ID">Düzenle</button>
+                                    <!-- Modal -->
+
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Icon</th>
+                            <th>Kod</th>
+                            <th>Aktif</th>
+                            <th>Düzenle</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-md-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ozellikekle3_@Model.Odalars.odaID">Özellik Ekle</button>
+        <!-- Modal -->
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Icon</th>
+                            <th>Kod</th>
+                            <th>Aktif</th>
+                            <th>Düzenle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.ozellik3)
+                        {
+                            <tr>
+                                <td align="center"><br />@Html.Raw(item.icon)</td>
+                                <td>@item.ozellik</td>
+                                <td>
+                                    @if (item.aktif == true)
+                                    {
+                                        <i class="lni lni-checkmark"></i>
+                                    }
+                                    else if (item.aktif == false)
+                                    {
+                                        <i class="lni lni-close"></i>
+                                    }
+                                </td>
+                                <td>
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#silozellik_@item.ozellik3ID">Sil</button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#duzenleozellik_@item.ozellik3ID">Düzenle</button>
+                                    <!-- Modal -->
+
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Icon</th>
+                            <th>Kod</th>
+                            <th>Aktif</th>
+                            <th>Düzenle</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+

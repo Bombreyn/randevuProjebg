@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "Odalar";
+}
+
+@model randevuProje.Models.Odalar
+
+@if (TempData["RandevuEklenmedi"] != null)
+{
+
+    <script>
+        Swal.fire("Randevu Alma Başarısız", "Tarih Dolu Lütfen Başka Tarih Deneyiniz", "error")
+    </script>
+}
+
+@if (TempData["RandevuEklendi"] != null)
+{
+    <script>
+        Swal.fire("Randevu Oluşturma Başarılı", "Sizin ile İletişime Geçeceğiz", "success")
+    </script>
+}
+
+@if (TempData["tarihhata"] != null)
+{
+    <script>
+        Swal.fire("Lütfen Geçerli Tarih Seçiniz", "", "error")
+    </script>
+}
+
+@if (Model.aktif != null && Model.aktif != false)
+{
+
+    <header class="page">
+        <div class="container">
+            <ul class="breadcrumbs d-flex flex-wrap align-content-center">
+                <li class="list-item"><a class="link" href="/Home/Index">Anasayfa</a></li>
+                <li class="list-item"><a class="link" href="/Home/Index#@Proje.Aktif.SiteAyar.secenek">Odalar</a></li>
+                <li class="list-item"><a class="link" href="#">@Model.adi</a></li>
+            </ul>
+            <h1 class="page_title">@Model.adi</h1>
+        </div>
+    </header>
+    <div class="room section">
+        <div class="container">
+            <div class="room_main d-lg-flex flex-wrap align-items-start">
+                <div class="room_main-slider col-12 d-lg-flex">
+                    <div class="room_main-slider_view col-lg-8">
+                        <div class="swiper-wrapper">
+                            @foreach (var item in Model.Resim)
+                            {
+                                <div class="swiper-slide">
+                                    <picture>
+                                        <img class="lazy" src="@item.resim1" alt="media">
+                                    </picture>
+                                </div>
+                            }
+
+
+                        </div>
+                        <div class="swiper-controls d-flex align-items-center justify-content-between">
+                            <a class="swiper-button-prev d-inline-flex align-items-center justify-content-center"
+                               href="#"><i class="icon-arrow_left icon"></i> </a><a class="swiper-button-next d-inline-flex align-items-center justify-content-center"
+                                                                                    href=#><i class="icon-arrow_right icon"></i></a>
+                        </div>
+                    </div>
+                    <div class="room_main-slider_thumbs">
+                        <div class="swiper-wrapper">
+                            @foreach (var item in Model.Resim)
+                            {
+                                <div class="swiper-slide">
+                                    <picture>
+                                        <img class="lazy" src="@item.resim1" alt="media">
+                                    </picture>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="room_main-info col-lg-8">
+                    <div class="amenities d-flex flex-wrap align-items-center">
+                        <span class="amenities_item d-inline-flex align-items-center">
+                            <i class="fa-solid fa-user"></i>&nbsp;@Model.kişi
+                        </span><span class="amenities_item d-inline-flex align-items-center">
+                            <i class="fa-solid fa-bed-front"></i>&nbsp;@Model.yatak
+                        </span><span class="amenities_item d-inline-flex align-items-center">
+                            <i class="fa-solid fa-couch"></i>&nbsp; @Model.ekyatak
+                        </span>
+                    </div>
+                    <div class="description">
+                        <p class="description_text">
+                            @Html.Raw(Model.aciklama)
+                        </p>
+                    </div>
+                    <section class="facilities">
+                        <h4 class="facilities_header">Özellikler</h4>
+                        <div class="facilities_list d-sm-flex flex-wrap">
+                            <div class="facilities_list-block">
+                                @foreach (var item in Model.ozellik1)
+                                {
+                                    <span class="facilities_list-block_item d-flex align-items-center">
+                                        <span class="icon">
+                                            @Html.Raw(item.icon)
+                                        </span>@item.ozellik
+                                    </span>
+                                }
+
+                            </div>
+                            <div class="facilities_list-block">
+                                @foreach (var item in Model.ozellik2)
+                                {
+                                    <span class="facilities_list-block_item d-flex align-items-center">
+                                        <span class="icon">
+                                            @Html.Raw(item.icon)
+                                        </span>@item.ozellik
+                                    </span>
+                                }
+
+                            </div>
+                            <div class="facilities_list-block">
+
+                                @foreach (var item in Model.ozellik3)
+                                {
+                                    <span class="facilities_list-block_item d-flex align-items-center">
+                                        <span class="icon">
+                                            @Html.Raw(item.icon)
+                                        </span>@item.ozellik
+                                    </span>
+                                }
+
+
+                            </div>
+                        </div>
+                    </section>
+                    <section class="rules">
+                        <h4 class="rules_header">Kurallar</h4>
+                        <div class="rules_list d-md-flex flex-lg-wrap">
+                            <div class="rules_list-block">
+                                @foreach (var item in Model.Kurallar)
+                                {
+                                    <p class="rules_list-block_item d-flex align-items-baseline">
+                                        <i class="icon-check icon"></i> @item.kural
+                                    </p>
+                                }
+
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="room_main-cards col-lg-4">
+                    <div class="room_main-cards_card">
+                        <span class="pricing">
+                            <span class="pricing_price h2">₺2700</span> /
+                            gecelik
+                        </span>
+                        @using (Html.BeginForm("Randevu", "Home", FormMethod.Post, new { @class = "booking" }))
+                        {
+                            <div class="booking_group d-flex flex-column">
+                                <label class="booking_group-label h5">Giriş</label>
+                                <div class="booking_group-wrapper">
+                                    <i class="icon-calendar icon"></i>
+                                    <input class="booking_group-field field required" name="giris" data-type="date" data-start="true" type="datetime" id="giris" placeholder="Giriş Tarihi Seçiniz" readonly required>
+                                    <i class="icon-chevron_down icon"></i>
+                                </div>
+                            </div>
+                            <div class="booking_group d-flex flex-column">
+                                <label class="booking_group-label h5">Çıkış</label>
+                                <div class="booking_group-wrapper">
+                                    <i class="icon-calendar icon"></i>
+                                    <input class="booking_group-field field required" name="cikis" data-end="true" id="cikis" placeholder="Çıkış Tarihi Seçiniz" readonly required>
+                                    <i class="icon-chevron_down icon"></i>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="field-wrapper">
+                                <label class="label" for="reviewRoomName"></label>
+                                <input class="field required" id="reviewRoomName" type="text" name="adi_soyad" placeholder="Ad-Soyad" required autocomplete="off">
+                            </div>
+                            <br>
+                            <div class="field-wrapper">
+                                <label class="label" for="reviewRoomName"></label>
+                                <input class="field required" name="mail" id="reviewRoomName" type="email" placeholder="Email" required="" autocomplete="off">
+                            </div>
+                            <br>
+                            <div class="field-wrapper">
+                                <label class="label" for="reviewRoomName"></label>
+                                <input class="field required" name="telefon" id="reviewRoomName" type="tel" placeholder="Telefon" required="" autocomplete="off">
+                                <input name="odaID" value="@Model.odaID" hidden>
+                            </div>
+                            <button type="submit" class="booking_btn btn theme-element theme-element--accent">Randevu Al</button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <br><br>
+        </div>
+    </div>
+}
+else
+{
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <h2 align="center">Sayfa bulunamadı...</h2>
+    <br />
+    <br />
+    <div align="center">
+        <a href="/Home/Index"><button class="booking_btn btn theme-element theme-element--accent vertical-center">Anasayfaya Dön</button></a>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+}

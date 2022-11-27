@@ -1,0 +1,117 @@
+﻿@model randevuProje.Models.ViewModel
+
+@{
+    ViewBag.Title = "ResimEkle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (TempData["ResimEklendi"] != null)
+{
+    <script>
+        Swal.fire("Resim", "Eklendi", "success")
+    </script>
+}
+@if (TempData["ResimSilindi"] != null)
+{
+    <script>
+        Swal.fire("Resim", "Silindi", "success")
+    </script>
+}
+
+<h6 class="mb-0 text-uppercase">@Model.Odalars.adi</h6>
+<hr />
+
+<div class="card">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resimekle_@Model.Odalars.odaID">Resim Ekle</button>
+    <!-- Modal -->
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Resim</th>
+                        <th>Düzenle</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.resims)
+                    {
+                        <tr>
+                            <td>@item.resimID</td>
+                            <td><a href="@item.resim1"><img src="@item.resim1" alt="@item.resim1" width="200" height="200"></a></td>
+                            <td>
+
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#sil_@item.resimID">Sil</button>
+                                <!-- Modal -->
+
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Resim</th>
+                        <th>Düzenle</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="resimekle_@Model.Odalars.odaID" tabindex="-1" aria-labelledby="exampleModalLabel2" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("Resim Ekle", "ResimEkle", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">@Model.Odalars.adi Resim Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" class="form-control" name="resim1" aria-label="file example" />
+                    <br />
+                    <input type="file" class="form-control" name="resim2" aria-label="file example" />
+                    <br />
+                    <input type="file" class="form-control" name="resim3" aria-label="file example" />
+                    <input type="hidden" name="isim" value="@Model.Odalars.adi" />
+                    <input type="hidden" name="odaID" value="@Model.Odalars.odaID" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Ekle</button>
+                    @*@Html.ActionLink("Resim Ekle", "ResimEkle", new { Model.bungalovs.Find(x => x.bungalovID == item.bungalovID).isim, Model.bungalovs.Find(x => x.bungalovID == item.bungalovID).bungalovID }, new { @class = "btn btn-primary" })*@
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model.resims)
+{
+    <div class="modal fade" id="sil_@item.resimID" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tesisi Sil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>
+                        Resimi Silmek İstiyor musunuz ? <br /><br />
+                    </h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                    @Html.ActionLink("Resim Sil", "ResimSil", new { item.resimID, Model.Odalars.adi, Model.Odalars.odaID }, new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

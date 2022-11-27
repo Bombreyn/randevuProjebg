@@ -1,0 +1,359 @@
+﻿@using randevuProje.Models
+@model KullaniciViewModel
+
+@{
+    ViewBag.Title = "Kullanıcılar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (TempData["KullaniciEklenmedi"] != null)
+{
+
+    <script>
+        Swal.fire("Aynı isimli bir Kullanıcı", "Bulunmaktadır", "error")
+    </script>
+}
+@if (TempData["KullaniciEklendi"] != null)
+{
+
+    <script>
+        Swal.fire("Kullanıcı", "Eklendi", "success")
+    </script>
+}
+@if (TempData["KullaniciSilindi"] != null)
+{
+
+    <script>
+        Swal.fire("Kullanıcı", "Silindi", "success")
+    </script>
+}
+@if (TempData["YetkiEklenmedi"] != null)
+{
+
+    <script>
+        Swal.fire("Yetki", "Mevcut", "error")
+    </script>
+}
+@if (TempData["YetkiEklendi"] != null)
+{
+
+    <script>
+        Swal.fire("Yetki", "Eklendi", "success")
+    </script>
+}
+@if (TempData["YetkiSilindi"] != null)
+{
+
+    <script>
+        Swal.fire("Yetki", "Silindi", "success")
+    </script>
+}
+@if (TempData["yetkiguncellendi"] != null)
+{
+
+    <script>
+        Swal.fire("Yetki", "Güncellendi", "success")
+    </script>
+}
+@if (TempData["kullaniciguncellendi"] != null)
+{
+
+    <script>
+        Swal.fire("Kullanıcı", "Güncellendi", "success")
+    </script>
+}
+
+<div class="col">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Kullanıcı Ekle</button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Kullanıcı Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="p-4 border rounded">
+                        @using (Html.BeginForm("KullaniciEkle", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "row g-3" }))
+                        {
+                            <div class="col-md-6">
+                                <label for="validationDefault01" class="form-label">Kullanıcı Adı Soyadı</label>
+                                <input type="text" class="form-control" id="validationDefault01" value="" name="adi_soyadi" required="">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="validationDefault01" class="form-label">Şifre</label>
+                                <input type="password" class="form-control" id="inputPassword3" value="" name="sifre" required="">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" onclick="myFunction()" id="exampleCheck2">
+                                    <label class="form-check-label" for="exampleCheck2">Şifreyi Göster</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Yetkiler</label>
+                                <select class="form-select" id="validationCustom04" name="yetkiID" required="">
+                                    <option value="">Yetkiler*</option>
+                                    @foreach (var item in Model.yetkis)
+                                    {
+                                        <option value="@item.yetkiID">@item.yetki1</option>
+
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">Kullanici Ekle</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">Yetki Ekle</button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Yetki Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="p-4 border rounded">
+                        @using (Html.BeginForm("YetkiEkle", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "row g-3" }))
+                        {
+                            <div class="col-md-9">
+                                <label for="validationDefault01" class="form-label">Yetki Adı</label>
+                                <input type="text" class="form-control" id="validationDefault01" value="" name="yetki" required="">
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">Yetki Ekle</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br />
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Kullanici Adı</th>
+                            <th>Yetki</th>
+                            <th>Duzenle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.admins)
+                        {
+                            <tr>
+                                <td>@item.adi_soyadi</td>
+                                <td>@item.Yetki.yetki1</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#guncelle_@item.adminID">Güncelle</button>
+
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#sil_@item.adminID">Sil</button>
+
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Kullanici Adı</th>
+                            <th>Yetki</th>
+                            <th>Duzenle</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Yetki Adı</th>
+                            <th>Düzenle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.yetkis)
+                        {
+                            <tr>
+                                <td>@item.yetki1</td>
+
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#guncelle_@item.yetkiID">Güncelle</button>
+
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#sil_@item.yetkiID">Sil</button>
+
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Yetki Adı</th>
+                            <th>Düzenle</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var item in Model.admins)
+    {
+        <!-- Modal -->
+        <div class="modal fade" id="guncelle_@item.adminID" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Kullanıcı Güncelle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="p-4 border rounded">
+                            @using (Html.BeginForm("KullaniciDuzenle", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "row g-3" }))
+                            {
+                                <div class="col-md-9">
+                                    <label for="validationDefault01" class="form-label">Kullanıcı Adı Soyadı</label>
+                                    <input type="text" class="form-control" id="validationDefault01" value="@item.adi_soyadi" name="adi_soyadi" required="">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Yetkiler</label>
+                                    <select class="form-select" id="validationCustom04" name="yetkiID" required="">
+                                        <option value="">Yetkiler*</option>
+                                        @foreach (var item2 in Model.yetkis)
+                                        {
+                                            if (item2.yetkiID == item.yetkiID)
+                                            {
+                                                <option value="@item2.yetkiID" selected>@item2.yetki1</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item2.yetkiID">@item2.yetki1</option>
+                                            }
+
+                                        }
+                                    </select>
+                                </div>
+                                <input name="adminID" type="hidden" value="@item.adminID" />
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="submit">Kullanıcı Güncelle</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="sil_@item.adminID" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Filtre Sil</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>
+                            Kullanıcıyı Silmek İstiyor musunuz ? <br /><br />
+                            <p> Silinecek Kullanici (@item.adi_soyadi)</p>
+                        </h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                        @Html.ActionLink("Sil", "KullaniciSil", new { item.adminID }, new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @foreach (var item in Model.yetkis)
+    {
+        <!-- Modal -->
+        <div class="modal fade" id="sil_@item.yetkiID" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Yetki Sil</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>
+                            YEtkiyi Silmek İstiyor musunuz ? <br /><br />
+                            <p> Silinecek Yetki (@item.yetki1)</p>
+                        </h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                        @Html.ActionLink("Sil", "YetkiSil", new { item.yetkiID }, new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="guncelle_@item.yetkiID" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Yetki Güncelle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="p-4 border rounded">
+                            @using (Html.BeginForm("YetkiDuzenle", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "row g-3" }))
+                            {
+                                <div class="col-md-9">
+                                    <label for="validationDefault01" class="form-label">Filtre Adı</label>
+                                    <input type="text" class="form-control" id="validationDefault01" value="@item.yetki1" name="yetki" required="">
+                                </div>
+                                <input name="yetkiID" type="hidden" value="@item.yetkiID" />
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="submit">Yetki Güncelle</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("inputPassword3");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
+    </script>

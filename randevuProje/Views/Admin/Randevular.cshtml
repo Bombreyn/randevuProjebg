@@ -1,0 +1,183 @@
+﻿@using randevuProje.App_Start
+@model randevuProje.Models.ViewModel
+
+@{
+    ViewBag.Title = "Randevular";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@if (TempData["randevuguncellendi"] != null)
+{
+
+    <script>
+        Swal.fire("Randevu Güncelleme", "Başarılı", "success")
+    </script>
+}
+
+@if (TempData["RandevuSilindi"] != null)
+{
+
+
+    <script>
+        Swal.fire("Randevu", "Silindi", "success")
+    </script>
+}
+
+
+<!--end breadcrumb-->
+<hr />
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Oda</th>
+                        <th>Ad Soyad</th>
+                        <th>Mail</th>
+                        <th>Telefon</th>
+                        <th>Giriş - Çıkış</th>
+                        <th>Gecelik Fiyat</th>
+                        <th>Toplam Fiyat</th>
+                        <th>Aktif</th>
+                        <th>Tarih</th>
+                        <th>Düzenle</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.randevus)
+                    {
+                        int NumberOfDays = Convert.ToInt32(item.cikis.Day - item.giris.Day);
+
+                        <tr>
+                            <td><a href="/Odalar/@seo.Seo.AdresDuzenle(item.Odalar.adi)-@item.odaID">@item.Odalar.adi</a></td>
+                            <td>@item.ad_soyad</td>
+                            <td><a href="mailto:@item.mail">@item.mail</a></td>
+                            <td><a href="tel:@item.telefon">@item.telefon</a></td>
+                            <td>@item.giris.ToString("d") - @item.cikis.ToString("d")</td>
+                            <td>@String.Format("{0:0}", item.Odalar.fiyat)</td>
+                            <td>@String.Format("{0:0}", item.Odalar.fiyat * NumberOfDays)</td>
+                            <td>
+                                @if (item.aktif == true)
+                                {
+                                    <i class="lni lni-checkmark"></i>
+                                }
+                                else if (item.aktif == false || item.cikis <= DateTime.Now)
+                                {
+                                    <i class="lni lni-close"></i>
+                                }
+                            </td>
+                            <td>@item.zaman.ToString("d")</td>
+                            <td>
+                                @if (item.aktif == false || item.cikis > DateTime.Now)
+                                {
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#guncelle_@item.randevuID">Güncelle</button>
+
+                                }
+
+
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#sil_@item.randevuID">Sil</button>
+                                <!-- Modal -->
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Oda</th>
+                        <th>Ad Soyad</th>
+                        <th>Mail</th>
+                        <th>Telefon</th>
+                        <th>Giriş - Çıkış</th>
+                        <th>Gecelik Fiyat</th>
+                        <th>Toplam Fiyat</th>
+                        <th>Aktif</th>
+                        <th>Tarih</th>
+                        <th>Düzenle</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model.randevus)
+{
+    <div class="modal fade" id="guncelle_@item.randevuID" tabindex="-1" aria-labelledby="exampleModalLabel" style="display:none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Randevu Güncelle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="p-4 border rounded">
+                        @using (Html.BeginForm("RandevuDuzenle", "Admin", FormMethod.Post, new { @class = "row g-3" }))
+                        {
+                            <div class="col-md-9">
+                                <label for="validationDefault01" class="form-label">Ad Soyad</label>
+                                <input type="text" class="form-control" id="validationDefault01" value="@item.ad_soyad" name="ad_soyad" required="">
+                            </div>
+                            <div class="col-md-9">
+                                <label for="validationDefault01" class="form-label">Telefon</label>
+                                <input type="text" class="form-control" id="validationDefault01" value="@item.telefon" name="telefon" required="">
+                            </div>
+
+                            if (item.aktif == true)
+                            {
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="validationFormCheck2" name="aktif" value="true" required="" checked>
+                                    <label class="form-check-label" for="validationFormCheck2">Aktif</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input type="radio" class="form-check-input" id="validationFormCheck3" name="aktif" value="false" required="">
+                                    <label class="form-check-label" for="validationFormCheck3">Pasif</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="validationFormCheck2" name="aktif" value="true" required="">
+                                    <label class="form-check-label" for="validationFormCheck2">Aktif</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input type="radio" class="form-check-input" id="validationFormCheck3" name="aktif" value="false" required="" checked>
+                                    <label class="form-check-label" for="validationFormCheck3">Pasif</label>
+                                </div>
+                            }
+                            <input name="randevuID" type="hidden" value="@item.randevuID" />
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">Randevu Güncelle</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="sil_@item.randevuID" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Randevu Sil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>
+                        Randevuyu Silmek İstiyor musunuz ? <br /><br />
+                    </h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                    @Html.ActionLink("Sil", "Randevusil", new { item.randevuID }, new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
